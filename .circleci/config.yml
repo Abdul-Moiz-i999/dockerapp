@@ -18,11 +18,15 @@ jobs:
           command: |
             docker-compose up -d
             docker-compose run dockerapp python test.py
+      - run:
+          name: Build Docker Image
+          command: |
+            docker-compose build  # Ensure the image is built before tagging and pushing
       - deploy:
           name: Push App Docker Image
           command: |
-            docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD  # Removed the -e flag
-            docker tag dockerapp-dockerapp-1 $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
-            docker tag dockerapp-dockerapp-1 $DOCKER_HUB_USER_ID/dockerapp:latest
+            echo $DOCKER_HUB_PWD | docker login -u $DOCKER_HUB_USER_ID --password-stdin  # More secure login
+            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:latest
             docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
             docker push $DOCKER_HUB_USER_ID/dockerapp:latest
