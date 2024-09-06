@@ -2,9 +2,8 @@ version: 2.1
 
 jobs:
   build:
-    working_directory: ~/dockerapp # Change to a directory with proper permissions
     docker:
-      - image: circleci/python:3.8 # Use a modern image with permissions
+      - image: circleci/python:3.8 # Debian-based image
     steps:
       - checkout
       - setup_remote_docker:
@@ -12,8 +11,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache docker
-            pip install docker-compose==1.29.2
+            sudo apt-get update
+            sudo apt-get install -y docker-compose  # Install docker-compose using apt
       - run:
           name: Run tests
           command: |
