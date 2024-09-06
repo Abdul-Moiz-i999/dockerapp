@@ -2,18 +2,18 @@ version: 2.1
 
 jobs:
   build:
-    working_directory: /dockerapp
+    working_directory: ~/dockerapp # Change to a directory with proper permissions
     docker:
-      - image: circleci/python:3.8 # Use a modern Python image with pip pre-installed
+      - image: circleci/python:3.8 # Use a modern image with permissions
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.7 # Ensure a newer Docker version
+          version: 20.10.7
       - run:
           name: Install dependencies
           command: |
             apk add --no-cache docker
-            pip install docker-compose==1.29.2  # Use a newer version of docker-compose
+            pip install docker-compose==1.29.2
       - run:
           name: Run tests
           command: |
