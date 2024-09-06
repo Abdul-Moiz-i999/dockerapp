@@ -26,7 +26,7 @@ jobs:
           name: Push App Docker Image
           command: |
             echo $DOCKER_HUB_PWD | docker login -u $DOCKER_HUB_USER_ID --password-stdin  # More secure login
-            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
-            docker tag dockerapp_dockerapp $DOCKER_HUB_USER_ID/dockerapp:latest
+            docker tag dockerapp-dockerapp-1 $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
+            docker tag dockerapp-dockerapp-1 $DOCKER_HUB_USER_ID/dockerapp:latest
             docker push $DOCKER_HUB_USER_ID/dockerapp:$CIRCLE_SHA1
             docker push $DOCKER_HUB_USER_ID/dockerapp:latest
